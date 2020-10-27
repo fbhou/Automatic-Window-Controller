@@ -30,6 +30,44 @@
      <attribute name="title">
       <string>天气信息</string>
      </attribute>
+     <widget class="QPushButton" name="UpdateWeather">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>30</y>
+        <width>81</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>更新天气</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="WeatherInformationText">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>70</y>
+        <width>321</width>
+        <height>171</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Adobe Devanagari</family>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>获取时间：
+地区：
+天气：
+气温：
+风向：
+风速：
+湿度：</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="MachineTab">
      <attribute name="title">
