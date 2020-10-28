@@ -39,6 +39,11 @@
         <height>31</height>
        </rect>
       </property>
+      <property name="font">
+       <font>
+        <family>宋体</family>
+       </font>
+      </property>
       <property name="text">
        <string>更新天气</string>
       </property>
@@ -48,24 +53,31 @@
        <rect>
         <x>10</x>
         <y>70</y>
-        <width>321</width>
+        <width>271</width>
         <height>171</height>
        </rect>
       </property>
       <property name="font">
        <font>
-        <family>Adobe Devanagari</family>
+        <family>宋体</family>
         <pointsize>12</pointsize>
        </font>
       </property>
       <property name="text">
        <string>获取时间：
+更新时间：
 地区：
 天气：
 气温：
 风向：
 风速：
 湿度：</string>
+      </property>
+      <property name="textFormat">
+       <enum>Qt::AutoText</enum>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
       </property>
      </widget>
     </widget>

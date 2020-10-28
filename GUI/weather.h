@@ -4,12 +4,13 @@
 #include<QMainWindow>
 #include<QObject>
 #include<QString>
+#include<QWidget>
 
 class Weather
 {
 public:
-    Weather();
-    QByteArray GetInfo();
+    Weather(QWidget*);
+    QByteArray GetInfo(QWidget*);
 private:
     QString UrlString,ApiString;
 };

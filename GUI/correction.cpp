@@ -1,8 +1,9 @@
 #include"correction.h"
 #include<QString>
 #include<QMessageBox>
+#include<QWidget>
 
-void Correction::WindowsPrint(QString str)
+void Correction::WindowsPrint(QWidget *parent,QString str)
 {
-    QMessageBox::information(NULL,"Test",str);
+    QMessageBox::warning(parent,"Test",str);
 }

@@ -2,10 +2,11 @@
 #define CORRECTION_H
 
 #include<QString>
+#include<QWidget>
 
 namespace Correction {
 
-void WindowsPrint(QString);
+void WindowsPrint(QWidget*,QString);
 
 }
 
