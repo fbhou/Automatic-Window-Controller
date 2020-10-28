@@ -1,6 +1,6 @@
 #include"correction.h"
-#include<QString>
 #include<QMessageBox>
+#include<QString>
 #include<QWidget>
 
 void Correction::WindowsPrint(QWidget *parent,QString str)
