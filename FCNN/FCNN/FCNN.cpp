@@ -7,10 +7,11 @@
 #include<cmath>
 
 double WorkOnce(int DataID) {
-	val[0][0] = Database[DataID].Temprature;
-	val[0][1] = Database[DataID].WindSpeed;
-	val[0][2] = Database[DataID].Rainfall;
-	val[0][3] = Database[DataID].TimeLen;
+	val[0][0] = Database[DataID].ClockTime;
+	val[0][1] = Database[DataID].Temprature;
+	val[0][2] = Database[DataID].WindSpeed;
+	val[0][3] = Database[DataID].Rainfall;
+	val[0][4] = Database[DataID].TimeLen;
 	for (int i = 1; i < MaxLayer; i++)
 		for (int j = 0; j < MaxNode[i]; j++) {
 			val[i][j] = bias[i][j];
@@ -48,7 +49,31 @@ void Initiallize() {
 }
 void LoadData() {
 	std::ifstream ifs(DATAFILE);
-
+	int bufint, buflen = 1;
+	double bufdouble;
+	ifs >> DataCount;
+	Database[0].Answer = 0;
+	for (int i = 1; i <= DataCount; i++) {
+		ifs >> bufint;
+		Database[i].ClockTime = ((bufint / 100) * 1.0 + (bufint % 100) / 60.0) / 12.0;
+		ifs >> bufdouble;
+		Database[i].Temprature = sigmoid((bufdouble - 15.0) / 15.0);
+		ifs >> bufdouble;
+		Database[i].WindDirection = std::fabs(bufdouble - 180.0) / 180.0;
+		ifs >> bufdouble;
+		Database[i].WindSpeed = sigmoid((bufdouble - 3.0) / 1.5);
+		ifs >> bufdouble;
+		Database[i].Rainfall = bufdouble > 0.5 ? 1 : 0;
+		ifs >> bufint;
+		Database[i].Answer = bufint;
+		Database[i].TimeLen = sigmoid((buflen - 24) / 12.0);
+		if (bufint == Database[i - 1].Answer) {
+			buflen++;
+		}
+		else {
+			buflen = 1;
+		}
+	}
 	ifs.close();
 	std::cout << "Data Load Completed!" << std::endl;
 }
