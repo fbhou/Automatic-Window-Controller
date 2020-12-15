@@ -2,7 +2,6 @@
 #include"mainwindow.h"
 #include"ui_mainwindow.h"
 #include"weather.h"
-#include<QtCharts>
 #include<QDateTime>
 #include<QFile>
 #include<QJsonArray>
