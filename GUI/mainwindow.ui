@@ -80,17 +80,6 @@
        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
       </property>
      </widget>
-     <widget class="QWidget" name="gridLayoutWidget">
-      <property name="geometry">
-       <rect>
-        <x>280</x>
-        <y>30</y>
-        <width>501</width>
-        <height>481</height>
-       </rect>
-      </property>
-      <layout class="QGridLayout" name="WeatherChart"/>
-     </widget>
     </widget>
     <widget class="QWidget" name="MachineTab">
      <attribute name="title">
