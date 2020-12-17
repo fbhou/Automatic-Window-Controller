@@ -9,15 +9,19 @@
 #include<QJsonObject>
 #include<QJsonParseError>
 #include<QString>
+#include<QTimer>
 
-Weather *weather;
+WeatherDataCollector collector;
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    weather=new Weather(this);
+    if(!collector.init(this))
+    {
+        QTimer::singleShot(0,qApp,SLOT(quit()));
+    }
 }
 
 MainWindow::~MainWindow()
@@ -27,6 +31,8 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_UpdateWeather_clicked()
 {
-    QString str=weather->UpdateWeather(this);
-    ui->WeatherInformationText->setText(str);
+    if(collector.update(this))
+    {
+        ui->WeatherInformationText->setText(collector.ToString());
+    }
 }
