@@ -21,7 +21,7 @@ static double delta[MaxLayer][MaxMaxNode];//Error of point (i,j)
 
 static int DataCount;
 struct WeatherData {
-	double ClockTime, Temprature, WindDirection, WindSpeed, Rainfall, TimeLen;
+	double ClockTime, Temprature, WindDirection, WindSpeed, Humidity, TimeLen;
 	int Answer;
 };
 static WeatherData Database[MaxData];

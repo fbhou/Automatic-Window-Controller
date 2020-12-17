@@ -10,7 +10,7 @@ double WorkOnce(int DataID) {
 	val[0][0] = Database[DataID].ClockTime;
 	val[0][1] = Database[DataID].Temprature;
 	val[0][2] = Database[DataID].WindSpeed;
-	val[0][3] = Database[DataID].Rainfall;
+	val[0][3] = Database[DataID].Humidity;
 	val[0][4] = Database[DataID].TimeLen;
 	for (int i = 1; i < MaxLayer; i++)
 		for (int j = 0; j < MaxNode[i]; j++) {
@@ -63,7 +63,7 @@ void LoadData() {
 		ifs >> bufdouble;
 		Database[i].WindSpeed = sigmoid((bufdouble - 3.0) / 1.5);
 		ifs >> bufdouble;
-		Database[i].Rainfall = bufdouble > 0.5 ? 1 : 0;
+		Database[i].Humidity = sigmoid((bufdouble - 50.0) / 30.0);
 		ifs >> bufint;
 		Database[i].Answer = bufint;
 		Database[i].TimeLen = sigmoid((buflen - 24) / 12.0);
