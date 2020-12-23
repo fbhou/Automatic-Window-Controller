@@ -13,6 +13,7 @@ static const int MaxData = 100000;
 static const double EvolveRate1 = 1e-3, EvolveRate2 = 1e-1;
 static std::string STATUSFILE = "status.txt";
 static std::string DATAFILE = "data.txt";
+static std::string TIMELOGFILE = "timelog.txt";
 
 static double weight[MaxLayer][MaxMaxNode][MaxMaxNode];//Weight of edge (i,j)->(i+1,k)
 static double bias[MaxLayer][MaxMaxNode];//Bias of point (i,j)
@@ -41,6 +42,9 @@ void LoadData();
 void LoadStatus();
 void SaveStatus();
 
-double WorkOnce(int);
+double WorkOnce(WeatherData Data);
 void Evolve(double);
+
+int Run(int, int, int, int);
+void Train(int);
 #endif

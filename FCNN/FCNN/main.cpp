@@ -1,25 +1,14 @@
 #include"FCNN.h"
 #include<iostream>
+#include<string>
 
-int main(){
-	int TrainTimes;
-	int RandID;
-	double Cost, CostSum = 0.0;
-	LoadData();
-	LoadStatus();
-	std::cout << "Input operation count: ";
-	std::cin >> TrainTimes;
-	for (int i = 1; i <= TrainTimes; i++) {
-		RandID = (int)(RandFloat() * MaxData);
-		Cost = WorkOnce(RandID);
-		CostSum += Cost * Cost;
-		Evolve(-Cost);
-		if (i % 10 == 0) {
-			std::cout << "Operation Complement: " << i << " of " << TrainTimes << std::endl;
-			std::cout << "Present Cost: " << CostSum << std::endl;
-			CostSum = 0.0;
-		}
+int main(int argc, char **argv){
+	if (argv[0][0] == 't') {
+		Train(std::stol(argv[1]));
+		return 0;
 	}
-	SaveStatus();
+	if (argv[0][0] == 'w') {	
+		return Run(std::stol(argv[1]), std::stol(argv[2]), std::stol(argv[3]), std::stol(argv[4]));
+	}
 	return 0;
 }

@@ -5,13 +5,14 @@
 #include<iostream>
 #include<random>
 #include<cmath>
+#include<ctime>
 
-double WorkOnce(int DataID) {
-	val[0][0] = Database[DataID].ClockTime;
-	val[0][1] = Database[DataID].Temprature;
-	val[0][2] = Database[DataID].WindSpeed;
-	val[0][3] = Database[DataID].Humidity;
-	val[0][4] = Database[DataID].TimeLen;
+double WorkOnce(WeatherData Data) {
+	val[0][0] = Data.ClockTime;
+	val[0][1] = Data.Temprature;
+	val[0][2] = Data.WindSpeed;
+	val[0][3] = Data.Humidity;
+	val[0][4] = Data.TimeLen;
 	for (int i = 1; i < MaxLayer; i++)
 		for (int j = 0; j < MaxNode[i]; j++) {
 			val[i][j] = bias[i][j];
@@ -19,7 +20,7 @@ double WorkOnce(int DataID) {
 				val[i][j] += val[i - 1][k] * weight[i - 1][k][j];
 			val[i][j] = sigmoid(val[i][j]);
 		}
-	return val[MaxLayer - 1][0] - Database[DataID].Answer;
+	return val[MaxLayer - 1][0] - Data.Answer;
 }
 void Evolve(double Cost) {
 	memset(delta, 0, sizeof(delta));
@@ -56,6 +57,7 @@ void LoadData() {
 	for (int i = 1; i <= DataCount; i++) {
 		ifs >> bufint;
 		Database[i].ClockTime = ((bufint / 100) * 1.0 + (bufint % 100) / 60.0) / 12.0;
+		if (Database[i].ClockTime > 1) Database[i].ClockTime = 2.0 - Database[i].ClockTime;
 		ifs >> bufdouble;
 		Database[i].Temprature = sigmoid((bufdouble - 15.0) / 15.0);
 		ifs >> bufdouble;
@@ -63,7 +65,7 @@ void LoadData() {
 		ifs >> bufdouble;
 		Database[i].WindSpeed = sigmoid((bufdouble - 3.0) / 1.5);
 		ifs >> bufdouble;
-		Database[i].Humidity = sigmoid((bufdouble - 50.0) / 30.0);
+		Database[i].Humidity = sigmoid((bufdouble - 0.80) / 0.10);
 		ifs >> bufint;
 		Database[i].Answer = bufint;
 		Database[i].TimeLen = sigmoid((buflen - 24) / 12.0);
@@ -102,4 +104,52 @@ void SaveStatus() {
 			ofs << std::setprecision(4) << bias[i][j];
 	ofs.close();
 	std::cout << "Status Save Completed!" << std::endl;
+}
+
+int Run(int Temprature, int Windspeed, int Winddirection, int Humidity) {
+	long long LastTime, NowTime;
+	int WindowType, OrderType;
+	WeatherData wtd;
+	std::ifstream ifs(TIMELOGFILE);
+	ifs >> LastTime >> WindowType;
+	ifs.close();
+
+	NowTime = time(0);
+	wtd.ClockTime = NowTime % 86400 / 43200.0;
+	if (wtd.ClockTime > 1) wtd.ClockTime = 2.0 - wtd.ClockTime;
+	wtd.Temprature = sigmoid((Temprature - 15.0) / 15.0);
+	wtd.Humidity = sigmoid((Humidity - 50.0) / 30.0);
+	wtd.WindDirection = std::fabs(Winddirection - 180.0) / 180.0;
+	wtd.WindSpeed = sigmoid((Windspeed - 3.0) / 1.5);
+	wtd.TimeLen = sigmoid(((NowTime - LastTime) - 43200) / 21600.0);
+
+	OrderType = WorkOnce(wtd) > 0.5 ? 1 : 0;
+	std::ofstream ofs(TIMELOGFILE);
+	if (WindowType == OrderType) {
+		ofs << LastTime << OrderType;
+	}
+	else {
+		ofs << NowTime << OrderType;
+	}
+	ofs.close();
+
+	return OrderType;
+}
+void Train(int TrainTimes) {
+	int RandID;
+	double Cost, CostSum = 0.0;
+	LoadData();
+	LoadStatus();
+	for (int i = 1; i <= TrainTimes; i++) {
+		RandID = (int)(RandFloat() * MaxData);
+		Cost = WorkOnce(Database[RandID]);
+		CostSum += Cost * Cost;
+		Evolve(-Cost);
+		if (i % 10 == 0) {
+			std::cout << "Operation Complement: " << i << " of " << TrainTimes << std::endl;
+			std::cout << "Present Cost: " << CostSum << std::endl;
+			CostSum = 0.0;
+		}
+	}
+	SaveStatus();
 }
