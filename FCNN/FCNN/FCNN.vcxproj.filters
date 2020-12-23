@@ -31,7 +31,10 @@
     <Text Include="status.txt">
       <Filter>资源文件</Filter>
     </Text>
-    <Text Include="TempDewWindByHalfhours_formatted.txt">
+    <Text Include="data.txt">
+      <Filter>资源文件</Filter>
+    </Text>
+    <Text Include="timelog.txt">
       <Filter>资源文件</Filter>
     </Text>
   </ItemGroup>

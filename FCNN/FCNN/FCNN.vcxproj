@@ -146,8 +146,9 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="data.txt" />
     <Text Include="status.txt" />
-    <Text Include="TempDewWindByHalfhours_formatted.txt" />
+    <Text Include="timelog.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
