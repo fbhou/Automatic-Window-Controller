@@ -10,7 +10,8 @@
 
 class WeatherCondition
 {
-private:
+    friend class WeatherDataCollector;
+protected:
     QString CurrentDateTime,UpdateDateTime,area,WeatherType,temperature,WindDirection,WindPower,humidity;
 public:
     WeatherCondition()=default;
@@ -29,6 +30,10 @@ public:
     bool init(QWidget*);
     bool update(QWidget*);
     QString ToString() const;
+    QString get_temperature() const;
+    QString get_WindDirection() const;
+    QString get_WindPower() const;
+    QString get_humidity() const;
 };
 
 #endif // WEATHER_H

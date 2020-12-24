@@ -5,5 +5,5 @@
 
 void Correction::WindowsPrint(QWidget *parent,QString str)
 {
-    QMessageBox::warning(parent,"Test",str);
+    QMessageBox::warning(parent,"NOTICE",str);
 }

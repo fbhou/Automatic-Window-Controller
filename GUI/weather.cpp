@@ -102,3 +102,23 @@ QString WeatherDataCollector::ToString() const
 {
     return this->Condition.ToString();
 }
+
+QString WeatherDataCollector::get_temperature() const
+{
+    return this->Condition.temperature;
+}
+
+QString WeatherDataCollector::get_WindDirection() const
+{
+    return this->Condition.WindDirection;
+}
+
+QString WeatherDataCollector::get_WindPower() const
+{
+    return this->Condition.WindPower;
+}
+
+QString WeatherDataCollector::get_humidity() const
+{
+    return this->Condition.humidity;
+}

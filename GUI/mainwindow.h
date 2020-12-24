@@ -14,6 +14,7 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    virtual void timerEvent(QTimerEvent *event);
 
 private slots:
     void on_UpdateWeather_clicked();
