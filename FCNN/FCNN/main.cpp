@@ -3,6 +3,10 @@
 #include<string>
 
 int main(int argc, char **argv){
+	if (argv[0][0] == 'i') {
+		Initiallize();
+		return 0;
+	}
 	if (argv[0][0] == 't') {
 		Train(std::stol(argv[1]));
 		return 0;

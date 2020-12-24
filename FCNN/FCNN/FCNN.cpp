@@ -137,19 +137,19 @@ int Run(int Temprature, int Windspeed, int Winddirection, int Humidity) {
 }
 void Train(int TrainTimes) {
 	int RandID;
-	double Cost, CostSum = 0.0;
+	double Cost, CostSum;
 	LoadData();
 	LoadStatus();
-	for (int i = 1; i <= TrainTimes; i++) {
+	std::cout << "\tRound\tCost" << std::endl;
+	for (int i = 0; i < TrainTimes; i++) {
 		RandID = (int)(RandFloat() * MaxData);
-		Cost = WorkOnce(Database[RandID]);
-		CostSum += Cost * Cost;
-		Evolve(-Cost);
-		if (i % 10 == 0) {
-			std::cout << "Operation Complement: " << i << " of " << TrainTimes << std::endl;
-			std::cout << "Present Cost: " << CostSum << std::endl;
-			CostSum = 0.0;
+		CostSum = 0.0;
+		for (int j = 0; j < MaxData; j++) {
+			Cost = WorkOnce(Database[(RandID + j) % MaxData]);
+			CostSum += Cost * Cost;
+			Evolve(-Cost);
 		}
+		std::cout <<"\t" << i << "\t" << CostSum << std::endl;
 	}
 	SaveStatus();
 }
